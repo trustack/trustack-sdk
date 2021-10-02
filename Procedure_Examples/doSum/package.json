@@ -1,0 +1,14 @@
+{
+  "name": "doSum",
+  "version": "1.0.0",
+  "description": "Example Trustack Procedure adding two values together",
+  "main": "doSum.js",
+  "dependencies": {
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

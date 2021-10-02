@@ -1,0 +1,11 @@
+TODO:
+- Quick index, with descriptions, of the examples
+- Deployment instructions
+    - maybe have a script to help?
+    - Need to provide the encryption public key
+    - Basic overview
+        - Embed secrets into code (or copy folder and embed - several ways to do this)
+        - tgz folder
+        - Delete secrets from code 
+        - gpg new `.tgz` file with public key
+        - IPFS add new `.gpg` file. Hash is your Procedure address

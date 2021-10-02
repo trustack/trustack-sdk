@@ -1,0 +1,13 @@
+{
+  "name": "trustack-lib",
+  "version": "0.1.0",
+  "description": "Helper client library for interaction with Trustack Exec nodes.",
+  "source": "src/trustack-lib.js",
+  "main": "dist/trustack-lib.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "parcel build src/trustack-lib.js"
+  },
+  "author": "Brandon Caldwell",
+  "license": "ISC"
+}
