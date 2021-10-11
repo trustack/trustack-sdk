@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<header>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</header>
+
+<body>
+    <table width="450px">
+        <tr>
+            <td><label>Value 1:</label></td>
+            <td><textarea id="val1Txt" placeholder="Enter a num here"></textarea></td>
+        </tr>
+        <tr>
+            <td><label>Value 2:</label></td>
+            <td><textarea id="val2Txt" placeholder="Enter a num here"></textarea></td>
+        </tr>
+        <tr>
+            <td><label>Sum:</label></td>
+            <td><button id="sumNumbersBtn">Get Sum</button></td>
+            <td><textarea id="sumFieldTxt" readonly=true placeholder="Sum of values will be here"></textarea></td>
+        </tr>
+    </table>
+
+    <script type="module" defer src="../../../src/trustack-lib.js"></script>
+    <script type="module" defer>
+        import { TrustackHelper } from "../../../src/trustack-lib.js";
+        let IS_LOCAL = true;
+        let trustackBootStrapURL;
+
+        if (IS_LOCAL) {
+            trustackBootStrapURL = "http://127.0.0.0.1:8081";
+        }
+        else {
+            trustackBootStrapURL = "https://trstgw1.westus.cloudapp.azure.com:8081";
+        }
+
+        const trustackHelper = new TrustackHelper(trustackBootStrapURL, true);
+        const getSumProcedureAddress = "QmPJWE8CKGyyRYf8hjJ4orG1SkgonVJF1XezazfN4YfLA6";
+
+    </script>
+    <script type="text/javascript" defer src="index.js"></script>
+</body>
+
+</html>

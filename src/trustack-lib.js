@@ -1,4 +1,5 @@
 export { TrustackHelper, ab2str, decode_base64, encryptText }
+export default TrustackHelper;
 
 /**
  * Helper class to simplify interaction with Trustack Exec nodes. runProcAsync is the primary method for use in the class.
@@ -6,10 +7,10 @@ export { TrustackHelper, ab2str, decode_base64, encryptText }
 class TrustackHelper {
     /**
      * Constructure
-     * @param {*} trustackBootStrapURL 
+     * @param {*} trustackBootStrapURL URL of the bootstrap Trustack node, aka, Proxy node. TODO: Set a default value once a reliable node is up.
      * @param {*} isServerLocal 
      */
-    constructor(trustackBootStrapURL = "https://trstgw1.westus.cloudapp.azure.com:8081", isServerLocal = false) {
+    constructor(trustackBootStrapURL, isServerLocal = false) {
         this.isServerLocal = isServerLocal;
         this.trustackUrl = trustackBootStrapURL;
         this.trustackPath = "/procedures/";
@@ -23,21 +24,23 @@ class TrustackHelper {
      * @param {bool} retRawData Default = false; runProcAsync will assume the return data is in JSON, setting this to true will return the data without parsing as JSON
      */
     runProcAsync(procId, inputs, postCb, retRawData = false) {
-        var procAddress = this.trustackUrl + this.trustackPath + procId;
+        let procAddress = this.trustackUrl + this.trustackPath + procId;
 
-        var data = {};
+        let data = {};
         data.procId = procId;
+
         let userObjStr = encodeURIComponent(JSON.stringify(inputs));
         data.procInputs = userObjStr;
-        var start = new Date().getTime();
+
+        let start = new Date().getTime();
         let dataStr = JSON.stringify(data);
         dataStr = btoa(dataStr);
 
-        $.ajax({
-            url: procAddress,
-            data: dataStr,
-            type: 'post',
-            success: function (response) {
+        fetch(procAddress, {
+            method: 'post',
+            body: dataStr
+        })
+            .then(response => {
                 if (response != "") {
                     let respObj = JSON.parse(response);
                     let outputObj = respObj.output;
@@ -51,8 +54,31 @@ class TrustackHelper {
                     }
                     postCb(start, outputObj);
                 }
-            }
-        });
+            })
+            .catch(error => {
+                console.error(err);
+            });
+
+        // $.ajax({
+        //     url: procAddress,
+        //     data: dataStr,
+        //     type: 'post',
+        //     success: function (response) {
+        //         if (response != "") {
+        //             let respObj = JSON.parse(response);
+        //             let outputObj = respObj.output;
+        //             if (!retRawData) {
+        //                 let outputStr = decode_base64(outputObj);
+        //                 // TODO: We've seen some odd encoding bugs getting data back from the Trustack Exec Nodes, so this is meant to clean that up,
+        //                 // assuming this is meant to be JSON data.
+        //                 outputStr = outputStr.replace('ÿ', '');
+        //                 outputStr = outputStr.replace('¿', '');
+        //                 outputObj = JSON.parse(outputStr);
+        //             }
+        //             postCb(start, outputObj);
+        //         }
+        //     }
+        // });
     }
 
 }
@@ -81,7 +107,7 @@ function ab2str(buf) {
 
 // Can't fidn the original source of this - probably somewhere from stackoverflow
 function decode_base64(s) {
-    var b = l = 0, r = '',
+    let b = 0, l = 0, r = '',
         m = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
     [].forEach.call(s, function (v) {
         b = (b << 6) + m.indexOf(v); l += 6;
@@ -91,7 +117,7 @@ function decode_base64(s) {
 }
 
 function isApiUp(apiUrl, success, failure, method = 'GET') {
-    var request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
     request.open(method, apiUrl, true);
     request.onreadystatechange = function () {
         if (request.readyState === 4) {

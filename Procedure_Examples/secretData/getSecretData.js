@@ -5,11 +5,10 @@ const httpsec = require('https');
     header. See Trustack docs for more information.
 
     In this example, this Procedure will attempt to retrieve protected content at the given address (secretFileAddress), 
-    using the provided token (authToken) as authorization
+    using the provided token (authToken) as authorization. 
 */
 let secretFileAddress = input.secretFileAddress;
 let authToken  = input.authToken;
-
 
 function checkUserValid(userToken) {
     return new Promise((resolve, reject) => {
@@ -47,7 +46,6 @@ function getContent(url) {
         });
     });
 }
-
 
 /*
     All Procedures must export a single function with no parameters, and return a Promise.

@@ -21,6 +21,7 @@ There is currently only a browser-based Javascript client library - we'll contin
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Usage](#usage)
+    - [Procedure Development](#procedure-development)
   - [Contributing](#contributing)
   - [License](#license)
   - [Security](#security)
@@ -34,6 +35,10 @@ _TBD_
 ## Usage
 
 See the [Examples](./Procedure_Examples) for how to use the SDK.
+
+### Procedure Development
+
+See the [Procedure Examples](./Procedure_Examples/README.md) folder for how to write Procedures.
 
 ## Contributing
 
