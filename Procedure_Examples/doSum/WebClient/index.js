@@ -3,6 +3,8 @@
 //  const { default: TrustackHelper } = require("../../../src/trustack-lib.js");
 
 // import {decode_base64} from "/js/trustack-lib.js";
+
+let start;
 import("./js/trustack-lib.js").then((TrustackSDK) => {
     let IS_LOCAL = true;
     let trustackBootStrapURL;
@@ -26,6 +28,8 @@ import("./js/trustack-lib.js").then((TrustackSDK) => {
     });
 
     function renderSum(runTime, sum) {
+        let end = window.performance.now();
+        console.log(`Procedure execution time: ${end - start} ms`);
         $("#sumFieldTxt").text(sum + "  (° ͜ʖ°)");
     }
 
@@ -40,6 +44,7 @@ import("./js/trustack-lib.js").then((TrustackSDK) => {
         inputs.val1 = val1;
         inputs.val2 = val2;
 
+        start = window.performance.now();
         trustackHelper.runProcAsync(getSumProcedureAddress, inputs, renderSum);
     }
 })
